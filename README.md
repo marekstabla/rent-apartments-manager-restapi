@@ -9,11 +9,22 @@ Tenants-manager is application for the management of the tenants in the apartmen
 
 * Install Python (https://www.python.org/downloads/)
 * Install pip (https://pip.pypa.io/en/stable/installing/)
-* Install virtual env ```pip install virtualenv```
+* Install virtual env
+  * For OSX/Linux ```pip install virtualenv```
+  * For Windows ```python -m pip install virtualenv```
 * Clone repository, and navigate to it
-* Create virtual env for project while in root directory ```virtualenv flask```
+* Create virtual env for project while in root directory 
+  * For OSX/Linux ```virtualenv flask```
+  * For Windows ```python -m virtualenv flask```
 * Install requirements
   * For OSX/Linux ```flask/bin/pip install -r requirements.txt```
   * For Windows ```flask\Scripts\pip install -r requirements.txt```
-* Run ```db_creation.py``` to create database, and ```db_upgrade.py``` to upgrade the schema
-* Navigate to project root directory and run service using ```run.py```
+* Create database by running creation script and then upgrade the schema
+  * For OSX/Linux ```db_creation.py```* and ```db_upgrade.py```*
+  * For Windows ```flask\Scripts\python db_creation.py```, ```flask\Scripts\python db_upgrade.py```
+* Run service
+  * For OSX/Linux ```run.py```*
+  * For Windows ```flask\Scripts\python run.py```
+  
+ 
+*Indicate that files are executable before you run it, f.e: ```chmod a+x run.py```
