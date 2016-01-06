@@ -10,12 +10,10 @@ Tenants-manager is application for the management of the tenants in the apartmen
 * Install Python (https://www.python.org/downloads/)
 * Install pip (https://pip.pypa.io/en/stable/installing/)
 * Install virtual env
-  * For OSX/Linux ```pip install virtualenv```
-  * For Windows ```python -m pip install virtualenv```
+  * ```pip install virtualenv```
 * Clone repository, and navigate to it
 * Create virtual env for project while in root directory 
-  * For OSX/Linux ```virtualenv flask```
-  * For Windows ```python -m virtualenv flask```
+  * ```python -m virtualenv flask```
 * Install requirements
   * For OSX/Linux ```flask/bin/pip install -r requirements.txt```
   * For Windows ```flask\Scripts\pip install -r requirements.txt```
