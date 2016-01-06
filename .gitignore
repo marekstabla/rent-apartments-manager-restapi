@@ -1,3 +1,18 @@
-## Directory-based project format:
+# Env files
 .idea/
+
+# Virtualenv
+.Python
+bin
+lib
+include
+
+# Mac OS X custom attribute files
+.DS_Store
+
+# Flask and project files
 *.pyc
+*.pyo
+app.db
+flask
+*.mo
