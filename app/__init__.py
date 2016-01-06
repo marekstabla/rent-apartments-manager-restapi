@@ -8,3 +8,8 @@ app.config.from_object('config')
 db = SQLAlchemy(app)
 
 from app import models, resources
+
+@app.route('/')
+@app.route('/index')
+def index():
+    return "rent-apartments-manager-restapi"
