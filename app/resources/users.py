@@ -12,7 +12,7 @@ parser.add_argument('room_id')
 class UserListAPI(Resource):
     #@marshal_with(models.User.__json__())
     def get(self):
-        return jsonify(models.User.query.all())git
+        return jsonify(models.User.query.all())
 
     def post(self):
         args = parser.parse_args()
