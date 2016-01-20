@@ -16,7 +16,7 @@ class ApartmentListAPI(Resource):
     	db.session.add(newApartment)
     	db.session.commit()
 
-    	return newApartment.id
+    	return newApartment.id, 201
 
 
 class ApartmentAPI(Resource):
@@ -31,13 +31,15 @@ class ApartmentAPI(Resource):
         apartment.location = args.location
 
         db.session.commit()
-        pass
+        return
 
     def delete(self, id):
         apartment =  models.Apartment.query.get(id)
+
         db.session.delete(apartment)
         db.session.commit()
-        pass
+        
+        return
 
 api.add_resource(ApartmentListAPI, '/apartments', endpoint = 'apartmentList')
 api.add_resource(ApartmentAPI, '/apartments/<int:id>', endpoint = 'apartment')
