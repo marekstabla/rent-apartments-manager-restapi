@@ -10,13 +10,17 @@ class ApartmentListAPI(Resource):
         return models.Apartment.query.all()
 
     def post(self):
-    	args = parser.parse_args()
-    	newApartment = models.Apartment(location=args.location)
+        args = parser.parse_args()
 
-    	db.session.add(newApartment)
-    	db.session.commit()
+        if location.name is None:
+            return "location not set", 400
 
-    	return newApartment.id, 201
+        newApartment = models.Apartment(location=args.location)
+
+        db.session.add(newApartment)
+        db.session.commit()
+
+        return newApartment.id, 201
 
 
 class ApartmentAPI(Resource):
@@ -28,7 +32,9 @@ class ApartmentAPI(Resource):
         apartment =  models.Apartment.query.get(id)
 
         args = parser.parse_args()
-        apartment.location = args.location
+
+        if location.name is not None:
+            apartment.location = args.location
 
         db.session.commit()
         return
@@ -38,7 +44,7 @@ class ApartmentAPI(Resource):
 
         db.session.delete(apartment)
         db.session.commit()
-        
+
         return
 
 api.add_resource(ApartmentListAPI, '/apartments', endpoint = 'apartmentList')

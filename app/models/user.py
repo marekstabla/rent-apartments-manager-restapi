@@ -25,6 +25,7 @@ class User(db.Model):
             return _json
 
         from app.models import Room
-        _json['room'] = fields.Nested(Room.__json__('flat'))
+        if Room is None:
+            _json['room'] = fields.Nested(Room.__json__('flat'))
 
         return _json

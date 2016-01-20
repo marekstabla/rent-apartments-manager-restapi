@@ -1,5 +1,9 @@
-from app import db
-from flask.ext.restful import fields
+from flask.ext.restful import fields, reqparse
+from app import models, api, db
+
+parser = reqparse.RequestParser()
+parser.add_argument('name')
+parser.add_argument('apartment_id')
 
 class Room(db.Model):
     __tablename__ = 'rooms'
