@@ -9,6 +9,7 @@ class User(db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     telephoneNumber = db.Column(db.String(20), index=True, unique=False)
     room_id = db.Column(db.Integer, db.ForeignKey('rooms.id'))
+    charges = db.relationship('Charge', backref='user', lazy='dynamic')
 
     @staticmethod
     def __json__(group=None):
@@ -24,7 +25,9 @@ class User(db.Model):
         if group == 'flat':
             return _json
 
-        from app.models import Room
+        from app.models import Room, Charge
         _json['room'] = fields.Nested(Room.__json__('flat'))
+        _json['charges'] = fields.List(fields.Nested(Charge.__json__('flat')))
+
 
         return _json
