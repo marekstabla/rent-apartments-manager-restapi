@@ -1,6 +1,5 @@
 from flask.ext.restful import fields, reqparse
 from app import db
-
 parser = reqparse.RequestParser()
 parser.add_argument('name')
 parser.add_argument('apartment_id')
