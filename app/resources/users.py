@@ -1,4 +1,5 @@
 from flask.ext.restful import Resource, marshal_with, reqparse
+from flask import jsonify
 from app import models, api, db
 
 parser = reqparse.RequestParser()
@@ -9,9 +10,9 @@ parser.add_argument('telephoneNumber')
 parser.add_argument('room_id')
 
 class UserListAPI(Resource):
-    @marshal_with(models.User.__json__())
+    #@marshal_with(models.User.__json__())
     def get(self):
-        return models.User.query.all()
+        return jsonify(models.User.query.all())git st
 
     def post(self):
         args = parser.parse_args()
