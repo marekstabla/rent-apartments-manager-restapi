@@ -12,7 +12,7 @@ class ApartmentListAPI(Resource):
     def post(self):
         args = parser.parse_args()
 
-        if location.name is None:
+        if args.location is None:
             return "location not set", 400
 
         newApartment = models.Apartment(location=args.location)
@@ -33,7 +33,7 @@ class ApartmentAPI(Resource):
 
         args = parser.parse_args()
 
-        if location.name is not None:
+        if args.location is not None:
             apartment.location = args.location
 
         db.session.commit()
