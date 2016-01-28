@@ -10,9 +10,9 @@ parser.add_argument('telephoneNumber')
 parser.add_argument('room_id')
 
 class UserListAPI(Resource):
-    #@marshal_with(models.User.__json__())
+    @marshal_with(models.User.__json__())
     def get(self):
-        return jsonify(models.User.query.all())
+        return models.User.query.all()
 
     def post(self):
         args = parser.parse_args()
