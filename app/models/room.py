@@ -11,6 +11,7 @@ class Room(db.Model):
     name = db.Column(db.String(64), index=True, unique=False)
     apartment_id = db.Column(db.Integer, db.ForeignKey('apartments.id'))
     tenants = db.relationship('User', backref='room', lazy='dynamic')
+    price = db.Column(db.Float, index=False, unique=False)
 
     @staticmethod
     def __json__(group=None):
@@ -19,6 +20,7 @@ class Room(db.Model):
         _json = {
             'id': fields.Integer,
             'name': fields.String,
+            'price': fields.Price,
             'uri': fields.Url('room')
         }
 
