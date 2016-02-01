@@ -23,8 +23,8 @@ class UserListAPI(Resource):
         if args.lastName is None:
             return "lastName not set", 400
 
-        if args.room_id is None:
-            return "room_id not set", 400
+        if args.email is None:
+            return "email not set", 400
 
         user = models.User(firstName=args.firstName, lastName=args.lastName, email=args.email, telephoneNumber=args.telephoneNumber, room_id=args.room_id)
 
