@@ -6,7 +6,7 @@ class Apartment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     location = db.Column(db.String(64), index=True, unique=False)
     rooms = db.relationship('Room', backref='apartment', lazy='dynamic')
-    rent_calculations = db.relationship('RentCalculation', backref='apartment', lazy='dynamic', order_by="desc(RentCalculation.)")
+    rent_calculations = db.relationship('RentCalculation', backref='apartment', lazy='dynamic', order_by="desc(RentCalculation.id)")
 
 
     @staticmethod
