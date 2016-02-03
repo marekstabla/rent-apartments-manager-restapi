@@ -17,6 +17,7 @@ class Bill(db.Model):
             'amount': fields.Float,
             'notes': fields.String,
             'paid': fields.Boolean,
+            'bill_type_id': fields.Integer,
         }
 
         from app.models import BillType

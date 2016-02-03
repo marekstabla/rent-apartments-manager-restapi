@@ -5,7 +5,7 @@ class BillType(db.Model):
     __tablename__ = 'bill_types'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), index=False, unique=False)
-    bills = db.relationship("Bill")
+    bills = db.relationship("Bill", backref='bill_types', lazy='dynamic')
 
     # Defines if bill should be paid by homeowner
     chargeable = db.Column(db.Boolean, index=False, unique=False)
@@ -15,12 +15,14 @@ class BillType(db.Model):
 
     @staticmethod
     def __json__(group=None):
-        return {
+        _json = {
             'id': fields.Integer,
             'reason': fields.String,
             'should_calculate': fields.Boolean,
             'chargeable': fields.Boolean
         }
+
+        return _json
 
     def __repr__(self):
         return '<BillType %r>' % (self.id)
