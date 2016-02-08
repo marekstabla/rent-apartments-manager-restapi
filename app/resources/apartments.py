@@ -7,7 +7,21 @@ parser.add_argument('location')
 class ApartmentListAPI(Resource):
     @marshal_with(models.Apartment.__json__())
     def get(self):
-        return models.Apartment.query.all()
+        apartments = models.Apartment.query.all()
+
+        for apartment in apartments:
+            for room in apartment.rooms:
+                for user in room.tenants:
+                        charges = models.Charge.query.filter_by(paid=False).filter_by(user_id=user.id)
+                        user.lastName = user.lastName # no idea why, but this helps
+                        user.balance = 0
+                        for charge in charges:
+                            if charge.bills is not None:
+                                 user.balance += charge.bills
+                            if charge.rent is not None:
+                                 user.balance += charge.rent
+
+        return apartments
 
     def post(self):
         args = parser.parse_args()
@@ -26,7 +40,20 @@ class ApartmentListAPI(Resource):
 class ApartmentAPI(Resource):
     @marshal_with(models.Apartment.__json__())
     def get(self, id):
-        return models.Apartment.query.get(id)
+        apartment = models.Apartment.query.get(id)
+
+        for room in apartment.rooms:
+            for user in room.tenants:
+                    charges = models.Charge.query.filter_by(paid=False).filter_by(user_id=user.id)
+                    user.lastName = user.lastName # no idea why, but this helps
+                    user.balance = 0
+                    for charge in charges:
+                        if charge.bills is not None:
+                             user.balance += charge.bills
+                        if charge.rent is not None:
+                             user.balance += charge.rent
+
+        return apartment
 
     def put(self, id):
         apartment =  models.Apartment.query.get(id)

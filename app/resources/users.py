@@ -9,11 +9,37 @@ parser.add_argument('email')
 parser.add_argument('telephoneNumber')
 parser.add_argument('room_id')
 
+class UserBalanceAPI(Resource):
+    def get(self, id):
+        user = models.User.query.get(id)
+        charges = models.Charge.query.filter_by(paid=False).filter_by(user_id=user.id)
+
+        balance = 0
+        for charge in charges:
+            if charge.bills is not None:
+                 balance += charge.bills
+            if charge.rent is not None:
+                 balance += charge.rent
+
+        return balance
+
 class UserListAPI(Resource):
     @marshal_with(models.User.__json__())
     def get(self):
-        return models.User.query.all()
+        users = models.User.query.all()
 
+        for user in users:
+            charges = models.Charge.query.filter_by(paid=False).filter_by(user_id=user.id)
+
+            user.balance = 0
+            for charge in charges:
+                if charge.bills is not None:
+                     user.balance += charge.bills
+                if charge.rent is not None:
+                     user.balance += charge.rent
+
+        return users;
+        
     def post(self):
         args = parser.parse_args()
 
@@ -80,3 +106,4 @@ class UserAPI(Resource):
 
 api.add_resource(UserListAPI, '/users', endpoint = 'userList')
 api.add_resource(UserAPI, '/users/<int:id>', endpoint = 'user')
+api.add_resource(UserBalanceAPI, '/usersBalance/<int:id>', endpoint = 'userBalance')
