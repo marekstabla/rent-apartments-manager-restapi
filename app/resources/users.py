@@ -36,7 +36,17 @@ class UserListAPI(Resource):
 class UserAPI(Resource):
     @marshal_with(models.User.__json__())
     def get(self, id):
-        return models.User.query.get(id)
+        user = models.User.query.get(id)
+        charges = models.Charge.query.filter_by(paid=False).filter_by(user_id=user.id)
+
+        user.balance = 0
+        for charge in charges:
+            if charge.bills is not None:
+                 user.balance += charge.bills
+            if charge.rent is not None:
+                 user.balance += charge.rent
+
+        return user
 
     def put(self, id):
         user =  models.User.query.get(id)

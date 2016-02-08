@@ -19,7 +19,8 @@ class User(db.Model):
             'lastName': fields.String,
             'email': fields.String,
             'telephoneNumber': fields.String,
-            'uri': fields.Url('user')
+            'uri': fields.Url('user'),
+            'balance': fields.Float
         }
 
         if group == 'flat':
