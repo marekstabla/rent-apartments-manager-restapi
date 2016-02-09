@@ -14,11 +14,8 @@ class BillTypeListAPI(Resource):
     def post(self):
         args = parser.parse_args()
 
-        if args.chargeable is None:
-            args.chargeable = 0
-
-        if args.should_calculate is None:
-            args.should_calculate = 0
+        args.should_calculate = args.should_calculate == "True"
+        args.chargeable = args.chargeable == "True"
 
         billType = models.BillType(name=args.name, chargeable=args.chargeable, should_calculate=args.should_calculate)
 
@@ -39,11 +36,8 @@ class BillTypeAPI(Resource):
         if args.name is not None:
             billType.name = args.name
 
-        if args.chargeable is not None:
-            billType.chargeable = args.chargeable
-
-        if args.should_calculate is not None:
-            billType.should_calculate = args.should_calculate
+        billType.should_calculate = args.should_calculate == "True"
+        billType.chargeable = args.chargeable == "True"
 
         db.session.commit()
         return

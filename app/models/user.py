@@ -8,7 +8,7 @@ class User(db.Model):
     lastName = db.Column(db.String(64), index=True, unique=False)
     email = db.Column(db.String(120), index=True, unique=True)
     telephoneNumber = db.Column(db.String(20), index=True, unique=False)
-    room_id = db.Column(db.Integer, db.ForeignKey('rooms.id'))
+    room_id = db.Column(db.Integer, db.ForeignKey('rooms.id'), nullable=True)
     charges = db.relationship('Charge', backref='user', lazy='dynamic')
 
     @staticmethod
@@ -19,7 +19,6 @@ class User(db.Model):
             'lastName': fields.String,
             'email': fields.String,
             'telephoneNumber': fields.String,
-            'uri': fields.Url('user'),
             'balance': fields.Float
         }
 

@@ -19,8 +19,7 @@ class Charge(db.Model):
             'bills': fields.Float,
             'rent': fields.Float,
             'notes': fields.String,
-            'paid': fields.Boolean,
-            'uri': fields.Url('charge')
+            'paid': fields.Boolean
         }
 
         if group == 'flat':

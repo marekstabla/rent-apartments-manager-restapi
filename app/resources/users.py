@@ -52,6 +52,13 @@ class UserListAPI(Resource):
         if args.email is None:
             return "email not set", 400
 
+        if args.room_id is not None:
+            if args.room_id != "0":
+                if models.Room.query.get(args.room_id) is None:
+                    return "invalid room"
+            else:
+                args.rom_id = None
+
         user = models.User(firstName=args.firstName, lastName=args.lastName, email=args.email, telephoneNumber=args.telephoneNumber, room_id=args.room_id)
 
         db.session.add(user)
@@ -89,9 +96,16 @@ class UserAPI(Resource):
 
         if args.telephoneNumber is not None:
             user.telephoneNumber = args.telephoneNumber
-            
+
         if args.room_id is not None:
-            user.room_id = args.room_id
+            if args.room_id != "0":
+                if models.Room.query.get(args.room_id) is None:
+                    return "invalid room", 400
+                else:
+                    user.room_id = args.room_id
+            else:
+                user.room_id = None
+
 
         db.session.commit()
         return

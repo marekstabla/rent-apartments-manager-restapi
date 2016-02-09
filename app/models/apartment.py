@@ -13,8 +13,7 @@ class Apartment(db.Model):
     def __json__(group=None):
         _json = {
             'id': fields.Integer,
-            'location': fields.String,
-            'uri': fields.Url('apartment')
+            'location': fields.String
         }
 
         if group == 'flat':

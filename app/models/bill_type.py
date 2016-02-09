@@ -17,6 +17,7 @@ class BillType(db.Model):
     def __json__(group=None):
         _json = {
             'id': fields.Integer,
+            'name': fields.String,
             'reason': fields.String,
             'should_calculate': fields.Boolean,
             'chargeable': fields.Boolean

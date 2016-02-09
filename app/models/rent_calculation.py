@@ -14,7 +14,9 @@ class RentCalculation(db.Model):
     def __json__(group=None):
         _json = {
             'id': fields.Integer,
-            'notes': fields.String
+            'notes': fields.String,
+            'chargesPaid': fields.Boolean,
+            'billsPaid': fields.Boolean
         }
 
         if group == 'flat':
@@ -22,8 +24,8 @@ class RentCalculation(db.Model):
 
         from app.models import Apartment, Bill, Charge
         _json['apartment'] = fields.Nested(Apartment.__json__('flat'))
-        _json['bills'] = fields.List(fields.Nested(Bill.__json__('flat')))
-        _json['charges'] = fields.List(fields.Nested(Charge.__json__('flat')))
+        _json['bills'] = fields.List(fields.Nested(Bill.__json__()))
+        _json['charges'] = fields.List(fields.Nested(Charge.__json__()))
 
         return _json
 
