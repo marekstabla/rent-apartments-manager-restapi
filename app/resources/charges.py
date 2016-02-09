@@ -22,6 +22,8 @@ class ChargeListAPI(Resource):
 
         if args.paid is None:
             args.paid = 0
+        else:
+            args.paid = args.paid == "True"
 
         charge = models.Charge(bills=args.bills, rent=args.rent, notes=args.notes, paid=args.paid, user_id=args.user_id, rent_calculation_id=args.rent_calculation_id)
 
@@ -49,7 +51,7 @@ class ChargeAPI(Resource):
             charge.notes = args.notes
 
         if args.paid is not None:
-            charge.paid = args.paid
+            charge.paid = args.paid == "True"
 
         if args.user_id is not None:
             charge.user_id = args.user_id

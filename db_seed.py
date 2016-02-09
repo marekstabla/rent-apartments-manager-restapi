@@ -45,19 +45,24 @@ if (len(bill_types) == 0):
     bill_types = models.BillType.query.all()
 
 if models.RentCalculation.query.count() == 0:
-    for ai in range(0, len(apartments)):
-        apartment = models.Apartment.query.get(ai+1)
+    for ri in range (0, 10):
+        for ai in range(0, len(apartments)):
 
-        for ri in range (0, 10):
+            apartment = models.Apartment.query.get(ai+1)
             rc = models.RentCalculation(apartment_id=apartment.id, notes=str(ri+1)+'/2015')
             db.session.add(rc)
             db.session.commit()
 
-            rc = models.RentCalculation.query.get((ai * 10)+ri+1)
+            rc = models.RentCalculation.query.get((ri * len(apartments))+ai+1)
             bills = 0
 
             for i in range(0, len(bill_types)):
-                b = models.Bill(bill_type_id=i+1, rent_calculation_id=rc.id, amount=randint(100,300), paid=choice([True, False]))
+                shouldBePaid = choice([True, False])
+
+                if (ri <= 8):
+                    shouldBePaid = True
+
+                b = models.Bill(bill_type_id=i+1, rent_calculation_id=rc.id, amount=randint(100,300), paid=shouldBePaid)
                 db.session.add(b)
                 bills += b.amount
 
@@ -65,7 +70,12 @@ if models.RentCalculation.query.count() == 0:
 
             for i in range(0, users_in_room*number_of_rooms_in_apartment):
                 u = models.User.query.get((ai * number_of_rooms_in_apartment)+i+1)
-                c = models.Charge(bills=bills, rent=u.room.price, paid=choice([True, False]), rent_calculation_id=rc.id, user_id=u.id)
+
+                shouldBePaid = choice([True, False])
+                if (ri <= 8):
+                    shouldBePaid = True
+
+                c = models.Charge(bills=bills, rent=u.room.price, paid=shouldBePaid, rent_calculation_id=rc.id, user_id=u.id)
                 db.session.add(c)
 
             db.session.commit()

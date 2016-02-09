@@ -69,6 +69,9 @@ class ApartmentAPI(Resource):
     def delete(self, id):
         apartment =  models.Apartment.query.get(id)
 
+        if apartment.rooms.count() > 0:
+            return "Can't delete apartment with rooms", 400
+
         db.session.delete(apartment)
         db.session.commit()
 

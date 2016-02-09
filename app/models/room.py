@@ -20,8 +20,7 @@ class Room(db.Model):
         _json = {
             'id': fields.Integer,
             'name': fields.String,
-            'price': fields.Price,
-            'uri': fields.Url('room')
+            'price': fields.Price
         }
 
         if group == 'flat':

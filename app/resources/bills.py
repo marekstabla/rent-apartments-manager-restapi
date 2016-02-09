@@ -19,11 +19,18 @@ class BillListAPI(Resource):
         if args.amount is None:
             return "amount not set", 400
 
+        if args.paid is not None:
+            args.paid == args.paid == "True"
+
         if args.bill_type_id is None:
             return "bill_type_id not set", 400
+        else:
+            billType = models.BillType.query.get(args.bill_type_id)
 
-        if args.paid is None:
-            args.paid = 0
+            if billType is None:
+                    return "invalid bill type", 400
+            else:
+                args.paid = billType.chargeable != True
 
         bill = models.Bill(amount=args.amount, bill_type_id=args.bill_type_id, notes=args.notes, paid=args.paid, rent_calculation_id=args.rent_calculation_id)
 
@@ -51,7 +58,7 @@ class BillAPI(Resource):
             bill.notes = args.notes
 
         if args.paid is not None:
-            bill.paid = args.paid
+            bill.paid = args.paid == "True"
 
         db.session.commit()
         return

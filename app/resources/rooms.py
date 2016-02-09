@@ -48,6 +48,9 @@ class RoomAPI(Resource):
     def delete(self, id):
         room =  models.Room.query.get(id)
 
+        if room.tenants.count() > 0:
+            return "Can't delete room with tenants", 400
+
         db.session.delete(room)
         db.session.commit()
 

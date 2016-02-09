@@ -8,7 +8,13 @@ parser.add_argument('notes')
 class RentCalculationListAPI(Resource):
     @marshal_with(models.RentCalculation.__json__())
     def get(self):
-        return models.RentCalculation.query.all()
+        rent_calculations = models.RentCalculation.query.order_by(models.RentCalculation.id.desc()).all()
+
+        for rent_calculation in rent_calculations:
+            rent_calculation.billsPaid = models.Bill.query.filter_by(rent_calculation_id=rent_calculation.id).filter_by(paid=False).count() == 0
+            rent_calculation.chargesPaid = models.Charge.query.filter_by(rent_calculation_id=rent_calculation.id).filter_by(paid=False).count() == 0
+
+        return rent_calculations
 
     def post(self):
         args = parser.parse_args()
