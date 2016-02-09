@@ -5,7 +5,7 @@ import time
 import names
 
 # Create users
-number_of_apartments = 3
+number_of_apartments = 1
 number_of_rooms_in_apartment = 2
 users_in_room = 2
 from random import randint
