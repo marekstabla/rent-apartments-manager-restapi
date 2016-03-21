@@ -1,5 +1,7 @@
 # rent-apartments-manager-restapi
 
+**This application was created in order to evaluate project at university. It contains only the required functionality.**
+
 Contributors:
 Marek Stabla
 
